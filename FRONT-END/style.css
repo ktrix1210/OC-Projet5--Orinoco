@@ -170,7 +170,7 @@ table {
   text-align: center;
 }
 
-.viderPanier, .payement, .confirmation{
+.viderPanier, .payement, .panier{
   margin-top: 24px;
   background-color: burlywood;
   color:white;
@@ -185,7 +185,7 @@ table {
   color: black;
 }
 
-.confirmation {
+.panier {
   width: 100px;
 }
 
