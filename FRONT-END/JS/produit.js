@@ -14,13 +14,13 @@
         <div class="product_description">
           <h3> ${teddy.name}</h3>
           <h3> ${teddy._id}</h3>
-          <p ${teddy.description}</p>
+          <p> ${teddy.description}</p>
         </div>
         <footer class="product_choice">
           <form class="formTeddys">
               <h4>couleur</h4>
               <select name="couleur" class="colorTeddy">
-                <option hidden disable selected>choisissez une couleur</option>
+                <option hidden disabled selected>choisissez une couleur</option>
               </select>
           </form>
           <form class="formTeddys">
