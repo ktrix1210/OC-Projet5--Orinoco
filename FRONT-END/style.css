@@ -197,8 +197,8 @@ table {
 }
 
 .teddy_img{
-  width: 50%;
-  max-width: 300px;
+  width: 100%;
+  max-width: 500px;
 }
 
 .product_description{
@@ -222,4 +222,27 @@ table {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+table img{
+  max-width: 300px;
+}
+
+@media(max-width: 900px){
+  thead{
+    display: none;
+  }
+  tr{
+    border: 1px solid grey;
+    display: flex;
+    flex-direction: column;
+    width: 310px;
+    margin: 0 auto;
+  }
+
+  td{
+    height: auto;
+    display: block;
+
+  }
 }

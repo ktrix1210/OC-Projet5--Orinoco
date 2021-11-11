@@ -28,29 +28,21 @@
 </div>
 
 <section class="recap-commande">
-  <table id="container">
+  <table id="globalContainer">
 
     <thead>
       <tr>
         <th>Photos</th>
         <th>Nom</th>
+        <th>couleur</th>
         <th>Prix Unitaire</th>
         <th>Quantitée</th>
         <th>Supprimer</th>
-        <th>Prix Total</th>
+        <th>Prix</th>
       </tr>
     </thead>
-    <tfoot>
-      <tr>
-      <td><img src="../images/Teddy_Norbert.png" alt="Norbert"></td>
-      <td>Norbert</td>
-      <td>29.00€</td>
-      <td>1</td>
-      <td><a href="#" class="suprteddy" data-id="XXXXX"><i class="fas fa-trash-alt"></i></a></td>
-      <td id="prixTotal"></td>
-    </tr>
+    <tfoot id="container">
     </tfoot>
-    
   </table>
 
   <button id="viderPanier" class="viderPanier">Vider tout le Panier </button>
@@ -89,12 +81,12 @@
     <div>
       <label for="email">E-mail *:</label><br />
       <input type="email" id="email" name="email" required="required" placeholder="martin@yahoo.fr"
-        pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}" />
+      pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z.]{2,15}" />
     </div>
 
-    <input type="submit" value="Commander" id="envoiFormulaire"/>
+    <input type="submit" value="Commander" id="sendOrder"/>
 
-    <p>* Champ Obligatoire</p>
+    <p> * : Champ Obligatoire</p>
   </form>
 
   <footer class="pages_footer">
@@ -104,6 +96,8 @@
       <li><a href="#">Conditions d'utilisations</a></li>
     </ul>
   </footer>
+
+  <script src="../JS/panier.js"></script>
 </body>
 
 </html>

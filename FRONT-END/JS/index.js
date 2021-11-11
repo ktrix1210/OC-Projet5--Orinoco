@@ -1,74 +1,3 @@
-//tableau (ressources)
-const teddies = [
-    {
-      "colors": ["Tan", "Chocolate", "Black", "White"],
-      "_id": "5be9c8541c9d440000665243",
-      "name": "Norbert",
-      "price": 2900,
-      "imageUrl": "teddy_1.jpg",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
-    {
-      "colors": [
-        "Pale brown",
-        "Dark brown",
-        "White"
-      ],
-      "_id": "5beaa8bf1c9d440000a57d94",
-      "name": "Arnold",
-      "price": 3900,
-      "imageUrl": "teddy_2.jpg",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
-    {
-      "colors": [
-        "Brown"
-      ],
-      "_id": "5beaaa8f1c9d440000a57d95",
-      "name": "Lenny and Carl",
-      "price": 5900,
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "imageUrl": "teddy_3.jpg"
-    },
-    {
-      "colors": [
-        "Brown",
-        "Blue",
-        "Pink"
-      ],
-      "_id": "5beaabe91c9d440000a57d96",
-      "name": "Gustav",
-      "price": 4500,
-      "imageUrl": "teddy_4.jpg",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    },
-    {
-      "colors": [
-        "Beige",
-        "Tan",
-        "Chocolate"
-      ],
-      "_id": "5beaacd41c9d440000a57d97",
-      "name": "Garfunkel",
-      "price": 5500,
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "imageUrl": "teddy_5.jpg"
-    }
-  ];
-  
-  //constructeur pour l'element teddy
-  class teddy {
-    constructor(colors, _id, name, price, description, imageUrl) 
-    {
-        this.colors = colors;
-        this._id = _id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.imageUrl = imageUrl;
-    }
-}
-
 //fonction de création de carte a partir du tableau
 function addCardTeddy(teddies) {
     console.log(teddies);
@@ -90,7 +19,7 @@ function addCardTeddy(teddies) {
               <p class="teddy_description"> ${teddy.description}</p>
             </div>
           <div class="price">
-              <p class="teddy_price"> ${teddy.price}</p>
+              <p class="teddy_price"> ${teddy.price /100} €</p>
           </div>
           </footer>
         </a> 
@@ -98,7 +27,12 @@ function addCardTeddy(teddies) {
     // insére l'enfant cardTeddy dans l'element recuperer par cardTeddys
     cardTeddys.appendChild(cardTeddy);
     }
+}
 
-} 
-
-addCardTeddy(teddies);
+//appel API avec fetch
+fetch("http://localhost:3000/api/teddies")
+    .then((response) => response.json())
+    .then((teddies) => {
+      addCardTeddy(teddies);
+    })
+    .catch((erreur) => console.log("erreur : " + erreur));

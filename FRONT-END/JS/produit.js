@@ -1,15 +1,8 @@
-const teddy = {
-    "colors": [
-      "Beige",
-      "Tan",
-      "Chocolate"
-    ],
-    "_id": "5beaacd41c9d440000a57d97",
-    "name": "Garfunkel",
-    "price": 5500,
-    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    "imageUrl": "teddy_5.jpg"
-  }
+  //recupération des donnés de la carte cliqué
+  let searchParams = (new URL(document.location)).searchParams;
+
+  //récupération par ID
+  const id = searchParams.get("id")
 
   //fonction de création de la carte du produit selectionné
   function addProductCard(teddy) {
@@ -17,7 +10,7 @@ const teddy = {
       let productCard = document.getElementsByClassName('teddyId')[0];
       productCard.innerHTML = `
         <img src= ${teddy.imageUrl}  alt="TeddiesPictures" class="teddy_img">
-        <p> ${teddy.price}</p>
+        <p> ${teddy.price / 100} €</p>
         <div class="product_description">
           <h3> ${teddy.name}</h3>
           <h3> ${teddy._id}</h3>
@@ -27,20 +20,21 @@ const teddy = {
           <form class="formTeddys">
               <h4>couleur</h4>
               <select name="couleur" class="colorTeddy">
+                <option hidden disable selected>choisissez une couleur</option>
               </select>
           </form>
           <form class="formTeddys">
               <h4>quantitée</h4>
               <select name="nombre" class="qantityTeddy">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
               </select>
           </form>
         </footer>
-        <a href="../pages/panier.html"><button type="submit" class= "panier" id="panier" value="submit">ajouter au panier</button></a>
+        <button type="submit" class= "panier" id="panier" value="submit">ajouter au panier</button>
       `
     // choix des options
       for (color of teddy.colors) {
@@ -55,38 +49,43 @@ const teddy = {
     });
   }
     //fonction d'ajout au panier
-    const addProductBasket = teddy=> {teddy.quantity = parseInt(document.getElementsByClassName('colorTeddy')[0].value);
-    
-    //recuperer le panier//rappel let variable = condition ?(ternaire) "valeur si vrais" / "valeur si faux"
-    let panier = localStorage.getItem('panier') ? JSON.parse(localStorage.getItem('panier')) : [];
+    const addProductBasket = teddy=> {
+      teddy.quantity = parseInt(document.getElementsByClassName('qantityTeddy')[0].value);
+      teddy.teddyColor = document.getElementsByClassName('colorTeddy')[0].value;
+      if (teddy.teddyColor == "choisissez une couleur") return;
+      //recuperer le panier//rappel let variable = condition ?(ternaire) "valeur si vrais" / "valeur si faux"
+      let panier = localStorage.getItem('panier') ? JSON.parse(localStorage.getItem('panier')) : [];
 
-    //récursive pour parcourir le panier
-    let teddyExistInIndex = false;
-    for (let i= 0; i < panier.length; i++) {
-      let product = panier[i];
-      //condition si le produit existe
-      if (product._id == teddy._id) {
-        teddyExistInIndex = i;
+      //récursive pour parcourir le panier
+      let teddyExistInIndex = false;
+      for (let i= 0; i < panier.length; i++) {
+        let product = panier[i];
+        //condition si le produit existe
+        if (product._id == teddy._id && product.teddyColor == teddy.teddyColor ) {
+          teddyExistInIndex = i;
+        }
       }
-    }
 
     //verification que l'ourson est dans le panier
-    if(false !== teddyExistInIndex) {
-      panier[teddyExistInIndex].quantity = parseInt(panier[teddyExistInIndex].quantity) + teddy.quantity;
-    }
-    else {
-      panier.push(teddy);
-    };
-    addLocalStorage(panier)
+      if(false !== teddyExistInIndex) {
+        panier[teddyExistInIndex].quantity = parseInt(panier[teddyExistInIndex].quantity) + teddy.quantity;
+      }
+      else {
+        panier.push(teddy);
+      };
+    
+    //transformation des données en chaine de caractére et sauvegarde dans le localStorage
+      localStorage.setItem('panier', JSON.stringify(panier));
+      window.location.href = "./panier.html"
   };
 
   //stockage avec Fetch
-  //fetch("http:localhost:3000/api/teddies/" + id)
-    //.then(response => response.json())
-    //.then (function (product) {
-      //let teddy = new teddy(product)
-      //display(teddy);
-    //})
-  
-    addProductCard(teddy);
-    addProductBasket(teddy);
+
+  fetch("http://localhost:3000/api/teddies/" + id)
+    .then(response => response.json())
+    .then(function (product) {
+      addProductCard(product);
+    })
+    .catch(function(err) {
+      console.log("fetch erreur" , err)
+    });
